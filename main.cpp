@@ -1,10 +1,13 @@
 #include <iostream>
 #include <cmath>
+#include <string>
+
 using namespace std;
 
 
 double input1, input2;
 char inputOperator;
+string history[100];
     
 double add(double a, double b) {
     return a + b;
@@ -31,19 +34,32 @@ void userInput(){
     cin >> input1 >> inputOperator >> input2;
 }
 
+void showHistory(const string history[], int count) {
+    if (count == 0) {
+        cout << "No history available." << endl;
+    } else {
+        cout << "History:" << endl;
+        for (int i = 0; i < count; i++) {
+            cout << history[i] << endl;
+        }
+    }
+}
 
-
-
-int main()
-{
+int main(){
     bool done = false;
     double result;
+    int historyCount = 0; 
     
     while (!done) {
         userInput();
         if (inputOperator == 'q'){
             done = true;
             break;
+        }
+        
+        if (inputOperator == 'h') {
+            showHistory(history, historyCount);
+            continue;
         }
         
         switch(inputOperator){
@@ -68,6 +84,9 @@ int main()
         }
         
         cout << "Result: " << result << endl;
+        history[historyCount] = to_string(input1) + " " + inputOperator + " " + to_string(input2) + " = " + to_string(result);
+        historyCount++;
+
         
     }
     return 0;
